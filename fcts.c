@@ -77,8 +77,6 @@ unsigned short encode_had_sys(unsigned short m){
     int decalage = 15-4;
     mRes = m>>decalage;
     mRes = mRes<<decalage;
-    printf("4 premier bits: %s\n",bin(mRes));
-
     //Préparation des colonnes de la matrice en tant que mot
     unsigned short Ghd[11];
     Ghd[0]=0b001100000000000;//colonne 5 
