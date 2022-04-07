@@ -38,7 +38,14 @@ printf("\nFonction 4 / print_word:\n");
 printf("\nFonction 5 / encode_had_sys:\n");
     x = 0b101111111111111;
     printf("x4= %s \n",bin(x));
-    encode_had_sys(x);
+    printf("%s\n",bin(encode_had_sys(x)));
+    
+printf("\nFonction 6 / cnt_bits:\n");
+    x = 0b101111111111111;
+    printf("x4= %s \n",bin(x));
+    printf("nb de bits a 1 = %d\n",cnt_bits(x));
+
+    
     return 0;
 }
 

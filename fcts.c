@@ -78,18 +78,18 @@ unsigned short encode_had_sys(unsigned short m){
     mRes = m>>decalage;
     mRes = mRes<<decalage;
     //Préparation des colonnes de la matrice en tant que mot
-    unsigned short Ghd[11];
-    Ghd[0]=0b001100000000000;//colonne 5 
-    Ghd[1]=0b010100000000000;//colonne 6
-    Ghd[2]=0b011000000000000;//colonne 7
-    Ghd[3]=0b011100000000000;//colonne 8
-    Ghd[4]=0b100100000000000;//colonne 9
-    Ghd[5]=0b101000000000000;//colonne 10
-    Ghd[6]=0b101100000000000;//colonne 11
-    Ghd[7]=0b110000000000000;//colonne 12
-    Ghd[8]=0b110100000000000;//colonne 13
-    Ghd[9]=0b111000000000000;//colonne 14 
-    Ghd[10]=0b111100000000000;//colonne 15 
+    unsigned short Ghds[11];
+    Ghds[0]=0b001100000000000;//colonne 5 
+    Ghds[1]=0b010100000000000;//colonne 6
+    Ghds[2]=0b011000000000000;//colonne 7
+    Ghds[3]=0b011100000000000;//colonne 8
+    Ghds[4]=0b100100000000000;//colonne 9
+    Ghds[5]=0b101000000000000;//colonne 10
+    Ghds[6]=0b101100000000000;//colonne 11
+    Ghds[7]=0b110000000000000;//colonne 12
+    Ghds[8]=0b110100000000000;//colonne 13
+    Ghds[9]=0b111000000000000;//colonne 14 
+    Ghds[10]=0b111100000000000;//colonne 15 
     
     //phase de calcule : 
     unsigned short tmp1=0b0;
@@ -101,21 +101,27 @@ unsigned short encode_had_sys(unsigned short m){
         tmp1=0b0;
         tmp2=0b0;
         for (j=1;j<5;j++){
-            tmp1=get_nth_bit(j,Ghd[i]);
+            tmp1=get_nth_bit(j,Ghds[i]);
             tmp2=get_nth_bit(j,mRes);
             controleB^=(tmp1&tmp2);
         }
         if(controleB)
             mRes=set_nth_bit(i+5,mRes);
     }
-
     return mRes;
 }
 
 
 int cnt_bits(unsigned short n){
     int resultat=0;
-
+    int i = 1;
+    while (i<17)
+    {
+        if(get_nth_bit(i,n))
+            resultat++;
+        
+        i++;
+    }
     return resultat;
 }
 
