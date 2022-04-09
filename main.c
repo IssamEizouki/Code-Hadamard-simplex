@@ -15,10 +15,12 @@ printf("\nFonction 1 / set_nth_bit\n");
 
 
 printf("\nFonction 2 / get_nth_bit\n");
-    x = 0b110111111111111;
+    x = 0b1101111111111110;
     printf("x2= %s \n",bin(x));
-    x= get_nth_bit(3,x);
-    printf("return 3ieme : resultat =%s\n",bin(x));
+    printf("return 1ier : resultat =%s\n",bin(get_nth_bit(1,x)));
+    printf("return 2ieme : resultat =%s\n",bin(get_nth_bit(2,x)));
+    printf("return 1ieme : resultat =%s\n",bin(get_nth_bit(3,x)));
+    printf("return 1ieme : resultat =%s\n",bin(get_nth_bit(4,x)));
 
 
 
@@ -36,7 +38,7 @@ printf("\nFonction 4 / print_word:\n");
   
 
 printf("\nFonction 5 / encode_had_sys:\n");
-    x = 0b101111111111111;
+    x = 0b1011000000000000;
     printf("x4= %s \n",bin(x));
     printf("%s\n",bin(encode_had_sys(x)));
     
