@@ -47,8 +47,13 @@ printf("\nFonction 6 / cnt_bits:\n");
     printf("x4= %s \n",bin(x));
     printf("nb de bits a 1 = %d\n",cnt_bits(x));
 
-    
-    return 0;
+
+printf("\nFonction 7 / dist_code_hds:\n");
+   dist_code_hds();
+
+
+
+return 0;
 }
 
 
