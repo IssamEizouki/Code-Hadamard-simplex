@@ -35,16 +35,7 @@ return l;
 unsigned short get_nth_bit(int n, unsigned short m){
 
     int decalage = 16-n;
-  
     unsigned short resultat = (m>>decalage);
- 
-
-   /*
-    printf("tmp2=%s\n",bin(tmp));
-    tmp = m&tmp;//AND
-    tmp = 1>>decalage;
-    printf("nouveau m2=%s\n",bin(tmp));
-    */
    
 return resultat%2;
 }
@@ -137,7 +128,7 @@ int cnt_bits(unsigned short n){
 
 
 
-//4.2+4.3
+//4.2&&4.3
 /*
 La distance d'un code est le minimum distance de Hamming entre deux mots de code distincts, 
 c'est-à-dire le nombre minimum de positions auxquelles deux mots de code distincts diffèrent. 
@@ -149,7 +140,7 @@ Wikipedia
 
 
 /*
-Il y a deux manière pour ce faire:
+Il y a deux manières pour ce faire:
 1) En calculant tous les poids de hamming de tous les mot du code et en en trouvant le minimum
 2) En calculant la distance de cahque couple de mots du code et en en trouvant le minimum 
 
@@ -251,7 +242,7 @@ unsigned short encode_had_sys_simplexe(unsigned short m){
 
 //Question 8 : DIMA --> il faut trouver la H de G (je opense que H = (At|id) ssi G = (id|A))
 
-//Question 9 : 
+//Question 9 : Issam 
 unsigned short decode(unsigned short m){
 unsigned short mRes=0b0000000000000000;
 
