@@ -69,6 +69,7 @@ void print_word( int k, unsigned short m){
     return;
 }
 unsigned short Ghds[16];//Matrice Ghds
+
 //3
 unsigned short encode_had_sys(unsigned short m){
     unsigned short mRes=0b0000000000000000;
@@ -190,8 +191,63 @@ int dist_code_hds(){
 
 //En effet il aurait suffit de regarder un couple de mot valide (au hasard) pour determiner
 //la distance minimale, puisqu'ils sont tous de la meme distance(propriete)
-//Ou encore mieux, on aurait pû calculer seulement le minimum des poids de hamming des mots de ce code
+//Ou encore mieux, on aurait pu calculer seulement le minimum des poids de hamming des mots de ce code
 //ce qui nous donnerait la distance minimum(puisque le code hamming est un code linéaire) 
 //8 dans notre cas (en vérité 16/2)
 
 
+//Question 5 :
+
+
+//La colonne nulle .....
+
+//Question 6
+
+//3
+unsigned short encode_had_sys_simplexe(unsigned short m){
+    unsigned short mRes=0b0000000000000000;
+    //pour les premiers 4 bits, on ne touche pas car les 4 premieres colones de la matrice Ghd est la matrice d'identité de 4*4
+    //à partir du 5ième bit:
+    int decalage = 15-4;
+    mRes = m>>decalage;
+    mRes = mRes<<decalage;
+    //Préparation des colonnes de la matrice en tant que mot
+    
+    Ghds[0]=0b0011000000000000;//colonne 5
+    Ghds[1]=0b0101000000000000;//colonne 6
+    Ghds[2]=0b0110000000000000;//colonne 7
+    Ghds[3]=0b0111000000000000;//colonne 8
+    Ghds[4]=0b1001000000000000;//colonne 9
+    Ghds[5]=0b1010000000000000;//colonne 10
+    Ghds[6]=0b1011000000000000;//colonne 11
+    Ghds[7]=0b1100000000000000;//colonne 12
+    Ghds[8]=0b1101000000000000;//colonne 13
+    Ghds[9]=0b1110000000000000;//colonne 14
+    Ghds[10]=0b1111000000000000;//colonne 15
+    
+    //phase de calcule : 
+    unsigned short tmp1=0b0;
+    unsigned short tmp2=0b0;
+     short test=0b0;
+    unsigned short controleB=0b0;
+    int i=0,j = 0;
+    for(i=0;i<11;i++){
+        
+        controleB=0b0;
+        tmp1=0b0;
+        tmp2=0b0;
+        for (j=1;j<5;j++){
+            
+            tmp1=get_nth_bit(j,Ghds[i]);
+            tmp2=get_nth_bit(j,mRes);
+            controleB^=(tmp1&tmp2);
+
+        }
+        
+            
+        if(controleB)
+            mRes=set_nth_bit(i+4,mRes);
+    }
+    
+    return mRes;
+}
