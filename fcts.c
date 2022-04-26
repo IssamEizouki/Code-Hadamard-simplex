@@ -197,9 +197,9 @@ int dist_code_hds(){
 
 
 //Question 5 :
-
-
 //La colonne nulle .....
+
+
 
 //Question 6
 
@@ -237,17 +237,16 @@ unsigned short encode_had_sys_simplexe(unsigned short m){
         tmp1=0b0;
         tmp2=0b0;
         for (j=1;j<5;j++){
-            
             tmp1=get_nth_bit(j,Ghds[i]);
             tmp2=get_nth_bit(j,mRes);
             controleB^=(tmp1&tmp2);
-
         }
-        
-            
         if(controleB)
             mRes=set_nth_bit(i+4,mRes);
     }
-    
     return mRes;
 }
+
+
+
+//Question 8 : DIMA --> il faut trouver la H de G (je opense que H = (At|id) ssi G = (id|A))
