@@ -195,8 +195,8 @@ int dist_code_hds(){
 //Question 6
 
 //3
-unsigned short encode_had_sys_simplexe(unsigned short m){
-    unsigned short mRes=0b0000000000000000;
+unsigned short encode_had_sys_simplexe(unsigned short m){ //A verifier
+    unsigned short mRes=0b000000000000000;
     //pour les premiers 4 bits, on ne touche pas car les 4 premieres colones de la matrice Ghd est la matrice d'identité de 4*4
     //à partir du 5ième bit:
     int decalage = 15-4;
@@ -219,7 +219,7 @@ unsigned short encode_had_sys_simplexe(unsigned short m){
     //phase de calcule : 
     unsigned short tmp1=0b0;
     unsigned short tmp2=0b0;
-     short test=0b0;
+    short test=0b0;
     unsigned short controleB=0b0;
     int i=0,j = 0;
     for(i=0;i<11;i++){

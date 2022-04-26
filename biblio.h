@@ -28,3 +28,5 @@ unsigned short encode_had_sys(unsigned short m);
 int cnt_bits(unsigned short n);
 
 int dist_code_hds();
+
+unsigned short encode_had_sys_simplexe(unsigned short m);

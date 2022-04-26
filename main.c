@@ -52,6 +52,11 @@ printf("\nFonction 7 / dist_code_hds:\n");
    dist_code_hds();
 
 
+printf("\nFonction 8 / encode_had_sys_simplexe:\n");
+    x = 0b101100101000000;
+    printf("x4= %s \n",bin(x));
+    printf("%s\n",bin(encode_had_sys_simplexe(x)));
+
 
 return 0;
 }
