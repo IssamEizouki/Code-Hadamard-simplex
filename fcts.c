@@ -250,3 +250,47 @@ unsigned short encode_had_sys_simplexe(unsigned short m){
 
 
 //Question 8 : DIMA --> il faut trouver la H de G (je opense que H = (At|id) ssi G = (id|A))
+
+//Question 9 : 
+unsigned short decode(unsigned short m){
+unsigned short mRes=0b0000000000000000;
+
+
+
+return mRes;
+}
+
+
+//Question 10.1 : Dima 
+
+
+//Question 10.2 : decode --> Issam 
+
+//Question 10.3 : Issam || Dima
+
+
+//Question 11 : Issam 
+
+//Question 12 : Issam
+unsigned short mod_poly_simplex(unsigned short m)
+{
+unsigned short mRes=0b0000000000000000;
+
+
+
+return mRes;
+}
+
+//Question 13 : Issam 
+
+
+
+//Codage & Decodage
+//Question 14 : Issam
+
+
+
+//Bonus : Issam
+
+
+//Rapport : Dima&&Issam 
