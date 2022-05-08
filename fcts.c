@@ -241,13 +241,82 @@ unsigned short encode_had_sys_simplexe(unsigned short m){ //A verifier
 
 
 //Question 8 : DIMA --> il faut trouver la H de G (je opense que H = (At|id) ssi G = (id|A))
+unsigned short H[11];//Matrice H --> 
 
+void init_H(){
+
+    H[0]=0b0011100000000000;//ligne 1
+    H[1]=0b0101010000000000;//ligne 2
+    H[2]=0b0110001000000000;//ligne 3
+    H[3]=0b0111000100000000;//ligne 4
+    H[4]=0b1001000010000000;//ligne 5
+    H[5]=0b1010000001000000;//ligne 6
+    H[6]=0b1011000000100000;//ligne 7
+    H[7]=0b1100000000010000;//ligne 8
+    H[8]=0b1101000000001000;//ligne 9
+    H[9]=0b1110000000000100;//ligne 10
+    H[10]=0b1111000000000010;//ligne 11
+}
+
+
+void print_word2(const unsigned short m)
+{  
+  unsigned short bit = 0 ;
+  unsigned short mask = 1 ;
+  char* buffer = calloc( 16 + 1, sizeof( char ) );
+  int i;
+  for (i = 0 ; i < 16 ; ++i) {
+    bit = (m & mask) >> i ;
+    buffer[ 16 - 1 - i ] = (char)('0' + bit);
+    mask <<= 1 ;
+  }
+  buffer[16] = '\0';
+  printf("%s\n",buffer);
+}
+
+
+void affichebin(unsigned short n)
+{
+	unsigned short bit = 0 ;
+	unsigned short mask = 1 ;
+	for (int i = 0 ; i < 16 ; i++)
+	{
+		bit = (n & mask) >> i ;
+		printf("%d", bit) ;
+		mask <<= 1 ;
+	}
+
+    printf("\n");
+}
 //Question 9 : Issam 
 unsigned short decode(unsigned short m){
-unsigned short mRes=0b0000000000000000;
+unsigned short mRes=0b0;
+
+//Decodage d'un mot en fonction de la matrice de parité H.
+//initialisation de la matrice de parité H
+init_H();
 
 
-
+//Decodage:
+    unsigned short tmp1=0b0;
+    unsigned short tmp2=0b0;
+    short test=0b0;
+    unsigned short controleB=0b0;
+    int i=0,j = 0;
+    for(i=0;i<11;i++){
+        
+        controleB=0b0;
+        tmp1=0b0;
+        tmp2=0b0;
+        for (j=1;j<16;j++){
+            tmp1=get_nth_bit(j,H[i]);
+            tmp2=get_nth_bit(j,m);
+            controleB^=(tmp1&tmp2);
+        }
+        if(controleB){
+            mRes=set_nth_bit(i,mRes);
+        }
+    }
 return mRes;
 }
 
@@ -281,7 +350,7 @@ return mRes;
 
 
 
-//Bonus : Issam
+//Bonus : Issam--> A voir!
 
 
 //Rapport : Dima&&Issam 

@@ -5,7 +5,7 @@
 
 int main(int argc, char**argv){
 
-short x = 0b101111111111111;
+unsigned short x = 0b101111111111111;
 
 printf("\nFonction 1 / set_nth_bit\n");
     printf("x1= %s \n",bin(x));
@@ -57,6 +57,14 @@ printf("\nFonction 8 / encode_had_sys_simplexe:\n");
     printf("x4= %s \n",bin(x));
     printf("%s\n",bin(encode_had_sys_simplexe(x)));
 
+
+printf("\nFonction 9-q9 / decode:\n");
+    x = 0b1010101010101010;
+    printf("x5= %s \n",bin(x));
+    x=decode(x);
+    print_word(0,x);
+    //affichebin(x);
+    print_word2(x);
 
 return 0;
 }
