@@ -240,9 +240,11 @@ unsigned short encode_had_sys_simplexe(unsigned short m){ //A verifier
 
 
 
-//Question 8 : DIMA --> il faut trouver la H de G (je opense que H = (At|id) ssi G = (id|A))
+//Question 8 : 
 unsigned short H[11];//Matrice H --> 
-
+/***
+ *  Fct : Initialisation de la matrice de parieté H de G(prevu de sa colonnes nulle)
+ * */
 void init_H(){
 
     H[0]=0b0011100000000000;//ligne 1
@@ -258,7 +260,12 @@ void init_H(){
     H[10]=0b1111000000000010;//ligne 11
 }
 
-
+/**
+ * Fct affichant un nb bin codé en short (16bits)
+ * En prenant en compte les 0 à gauche
+ * param(in) : un mot en short
+ * param(out): -
+ * */
 void print_word2(const unsigned short m)
 {  
   unsigned short bit = 0 ;
@@ -275,28 +282,19 @@ void print_word2(const unsigned short m)
 }
 
 
-void affichebin(unsigned short n)
-{
-	unsigned short bit = 0 ;
-	unsigned short mask = 1 ;
-	for (int i = 0 ; i < 16 ; i++)
-	{
-		bit = (n & mask) >> i ;
-		printf("%d", bit) ;
-		mask <<= 1 ;
-	}
 
-    printf("\n");
-}
 //Question 9 : Issam 
+
+/***
+ * Fct decode : Decodage d'un mot en fonction de la matrice de parité H.
+ * param(in): mot à decoder
+ * param(out): syndrome (les 11 premiers bits de gauche à droite)
+ * Attention l'affichage de ce syndrome de retour doit etre effectuer avec la fct print_word2
+ * */
 unsigned short decode(unsigned short m){
 unsigned short mRes=0b0;
-
-//Decodage d'un mot en fonction de la matrice de parité H.
 //initialisation de la matrice de parité H
 init_H();
-
-
 //Decodage:
     unsigned short tmp1=0b0;
     unsigned short tmp2=0b0;

@@ -63,7 +63,6 @@ printf("\nFonction 9-q9 / decode:\n");
     printf("x5= %s \n",bin(x));
     x=decode(x);
     print_word(0,x);
-    //affichebin(x);
     print_word2(x);
 
 return 0;

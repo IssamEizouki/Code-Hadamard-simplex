@@ -31,5 +31,4 @@ int dist_code_hds();
 
 unsigned short encode_had_sys_simplexe(unsigned short m);
 unsigned short decode(unsigned short m);
-void affichebin(unsigned short n);
 void print_word2(const unsigned short m );
