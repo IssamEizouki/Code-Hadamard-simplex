@@ -44,9 +44,7 @@ return resultat%2;
 unsigned short chg_nth_bit(int n, unsigned short m){
     int decalage = 15-n;
     unsigned short tmp = 1<<decalage;
-    printf("tmp3=%s\n",bin(tmp));
     unsigned short l = m^tmp;//XOR
-    printf("nouveau m3=%s\n",bin(l));
 
 return l;
 }
@@ -322,7 +320,44 @@ return mRes;
 //Question 10.1 : Dima 
 
 
-//Question 10.2 : decode --> Issam 
+//Question 10.2 : decodeV2 --> Issam 
+
+/***
+ * Fct decodeV2 : Decodage d'un mot en fonction de la matrice de parité H.
+ * param(in): mot à decoder
+ * param(out): syndrome apres coorection de 3 erreurs
+ * Attention l'affichage de ce syndrome de retour doit etre effectuer avec la fct print_word2
+ * */
+unsigned short decodeV2(unsigned short m){
+unsigned short mRes=0b0;
+//initialisation de la matrice de parité H
+init_H();
+//Decodage:
+    unsigned short tmp1=0b0;
+    unsigned short tmp2=0b0;
+    short test=0b0;
+    unsigned short controleB=0b0;
+    int i=0,j = 0;
+    for(i=0;i<11;i++){
+        
+        controleB=0b0;
+        tmp1=0b0;
+        tmp2=0b0;
+        for (j=1;j<16;j++){
+            tmp1=get_nth_bit(j,H[i]);
+            tmp2=get_nth_bit(j,m);
+            controleB^=(tmp1&tmp2);
+        }
+        if(controleB){
+            mRes=set_nth_bit(i,mRes);
+        }
+    }
+    if(mRes!=0){
+        for (i=0;i<3;i++)//Capacité de corriger 3 erreurs
+            m=chg_nth_bit(i,m);
+    }
+return m;
+}
 
 //Question 10.3 : Issam || Dima
 

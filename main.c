@@ -62,9 +62,15 @@ printf("\nFonction 9-q9 / decode:\n");
     x = 0b1010101010101010;
     printf("x5= %s \n",bin(x));
     x=decode(x);
-    print_word(0,x);
     print_word2(x);
 
+
+printf("\nFonction 10-q10.2 / decodeV2:\n");
+    x = 0b0011101001001010;
+    print_word2(x);
+    x=decodeV2(x);
+    //x= chg_nth_bit(0,x);
+    print_word2(x);
 return 0;
 }
 
