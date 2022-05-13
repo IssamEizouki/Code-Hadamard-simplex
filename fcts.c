@@ -5,7 +5,6 @@
 //Question 1 :
 //La matrice Ghds est bien systématique puisque G= (I|A), tels que I est la matrice d'identité, A quelconque 
 // Autrement dit ( message encodé == message d'origine suivie de l'info redondante)
-//ex: ...
 
 
 
@@ -240,7 +239,7 @@ unsigned short encode_had_sys_simplexe(unsigned short m){ //A verifier
 
 //Question 8 : 
 unsigned short H[11];//Matrice H 
-unsigned short HT[21];//Transposee de H 
+unsigned short HCols[21];//Transposee de H 
 /***
  *  Fct : Initialisation de la matrice de parieté H de G(prevu de sa colonnes nulle)
  * */
@@ -261,27 +260,27 @@ void init_H_lignes(){
 
 void init_H_Cols(){
 
-    HT[0]=0b0000111111100000;//colonne 1
-    HT[1]=0b0111000111100000;//colonne 2
-    HT[2]=0b1011011001100000;//colonne 3
-    HT[3]=0b1101101010100000;//colonne 4
-    HT[4]=0b1000000000000000;//colonne 5
-    HT[5]=0b0100000000000000;//colonne 6
-    HT[6]=0b0010000000000000;//colonne 7
-    HT[7]=0b0001000000000000;//colonne 8
-    HT[8]=0b0000100000000000;//colonne 9
-    HT[9]=0b0000010000000000;//colonne 10
-    HT[10]=0b0000001000000000;//colonne 11
-    HT[11]=0b0000000100000000;//colonne 12
-    HT[12]=0b0000000010000000;//colonne 13
-    HT[13]=0b0000000001000000;//colonne 14
-    HT[14]=0b0000000000100000;//colonne 15
-    HT[15]=0b0000000000010000;//colonne 16
-    HT[16]=0b0000000000010000;//colonne 17
-    HT[17]=0b0000000000001000;//colonne 18
-    HT[18]=0b0000000000000100;//colonne 19
-    HT[19]=0b0000000000000010;//colonne 20
-    HT[20]=0b0000000000000001;//colonne 21
+    HCols[0]=0b0000111111100000;//colonne 1
+    HCols[1]=0b0111000111100000;//colonne 2
+    HCols[2]=0b1011011001100000;//colonne 3
+    HCols[3]=0b1101101010100000;//colonne 4
+    HCols[4]=0b1000000000000000;//colonne 5
+    HCols[5]=0b0100000000000000;//colonne 6
+    HCols[6]=0b0010000000000000;//colonne 7
+    HCols[7]=0b0001000000000000;//colonne 8
+    HCols[8]=0b0000100000000000;//colonne 9
+    HCols[9]=0b0000010000000000;//colonne 10
+    HCols[10]=0b0000001000000000;//colonne 11
+    HCols[11]=0b0000000100000000;//colonne 12
+    HCols[12]=0b0000000010000000;//colonne 13
+    HCols[13]=0b0000000001000000;//colonne 14
+    HCols[14]=0b0000000000100000;//colonne 15
+    HCols[15]=0b0000000000010000;//colonne 16
+    HCols[16]=0b0000000000010000;//colonne 17
+    HCols[17]=0b0000000000001000;//colonne 18
+    HCols[18]=0b0000000000000100;//colonne 19
+    HCols[19]=0b0000000000000010;//colonne 20
+    HCols[20]=0b0000000000000001;//colonne 21
 
 }
 
@@ -318,7 +317,7 @@ return mRes;
 }
 
 
-//Question 9 : Issam 
+//Question 9: 
 
 /***
  * Fct decode : Decodage d'un mot en fonction de la matrice de parité H.
@@ -354,23 +353,19 @@ return mRes;
 }
 
 
-//Question 10.1 : Dima 
+//Question 10.1 : Rapport 
 
 
-//Question 10.2 : decodeV2 --> Issam 
+//Question 10.2 : decodeV2
 
 /***
  * Fct decodeV2 : Decodage d'un mot en fonction de la matrice de parité H.
  * param(in): mot à decoder
- * param(out): syndrome apres coorection de 3 erreurs
- * Attention l'affichage de ce syndrome de retour doit etre effectuer avec la fct print_word2
+ * param(out): le mot apres coorection de 3 erreurs
+ * Attention l'affichage de ce mot de retour doit etre effectuer avec la fct print_word2
  * */
 unsigned short decodeV2(unsigned short m){
 unsigned short mRes=0b0;
-unsigned short TmpLigne1=0b0;
-unsigned short TmpLigne2=0b0;
-unsigned short TmpLigne3=0b0;
-unsigned short TmpCorrec=0b0;
 //initialisation de la matrice de parité H
 //Decodage:
 mRes=decode(m);//syndrome
@@ -379,22 +374,20 @@ init_H_Cols();
     if(mRes!=0){
         
         for ( int i =0 ; i<11;i++){
-            TmpLigne1 = onze_bits(HT[i]);
-
-            if(deux_mots_egaux (mRes,TmpLigne1)){
+            if(mRes==HCols[i]){
                 m=chg_nth_bit(i,m);
                 printf("Ce mot contenait une erreur au %dieme bit et ca ete corrigé\n ",i+1);
                 return m;
             }
             for (int j = i+1 ; j<11;j++){
-                if(mRes == (HT[j] ^ HT[i])){
+                if(mRes == (HCols[j] ^ HCols[i])){
                 m=chg_nth_bit(i,m);
                 m=chg_nth_bit(j,m);
                 printf("Ce mot contenait 2 erreurs au %dieme bit et au %dieme bit ca ete corrigé\n ",i+1,j+1);
                 return m;  
                 }
                 for ( int k= j+1;k<11;k++){
-                    if(mRes == (HT[i]^HT[j]^HT[k])){
+                    if(mRes == (HCols[i]^HCols[j]^HCols[k])){
                     m=chg_nth_bit(i,m);
                     m=chg_nth_bit(j,m);
                     m=chg_nth_bit(k,m);
@@ -410,35 +403,67 @@ init_H_Cols();
     }
     return m;
 }
-
-
-    //Question 10.3 : Issam || Dima
-
-
+    //Question 10.3 : Rapport
     //Question 11 : Simplexe polynomial : 
-    //Registre de décalage à dessiner :
+    //Registre de décalage dessiné dans le rapport 
 
+/**
+ * Fonction qui sert à initialiser le polynome
+ * 
+ * */
+unsigned short p = 0b0;
+void init_p(){
+    p= 0b1111010110010000; 
+}
+    //Question 12 
 
-    //Question 12 : Issam
+    /**
+     * Fct mod_poly_simplex
+     * cette fonction fait la division de message par le poly en utilisant le registre de decalage 
+     * elle renvoit le reste de la division
+     * param(in) : message
+     * param(out) : reste de la division par le poly
+     * */
     unsigned short mod_poly_simplex(unsigned short m)
     {
-    unsigned short mRes=0b0000000000000000;
-
-
-
+    unsigned short mRes=m;
+    unsigned short tmp=0b0000000000000000;
+    init_p();
+    unsigned short controleB = 0b0;
+    for (int i = 0 ; i <4 ; i++){
+        controleB = get_nth_bit(i+1,mRes);
+        if(controleB){
+            tmp = p>>i;
+            mRes = mRes ^ tmp;
+        }
+    }
+    mRes = mRes; 
     return mRes;
 }
 
-//Question 13 : Issam 
 
 
+//Question 13 :
+unsigned short decode_poly(unsigned short m,unsigned short mPrincipale, int countDecalage){
+    unsigned short tmp = 0b0;
+    int condition = 1;
+    while(condition){
+        unsigned short  reste= mod_poly_simplex(m);
+        if(cnt_bits(reste)<=3){//le reste est le vecteur d'erreur 
+            //il suffit d'ajouter le reste au message
+            m= m^reste ;
+            condition = 0;
+        }
+        else {
+            countDecalage++;
+            m=mPrincipale<<countDecalage;
+        }
+    }
+    tmp = mPrincipale >> (16-countDecalage);
+    
+    m=m<<countDecalage;
 
-//Codage & Decodage
-//Question 14 : Issam
+    m = tmp | m;
 
-
-
-//Bonus : Issam--> A voir!
-
-
-//Rapport : Dima&&Issam 
+    return m;
+}

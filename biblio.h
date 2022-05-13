@@ -35,3 +35,6 @@ void print_word2(const unsigned short m );
 unsigned short decodeV2(unsigned short m);
 void init_H_lignes();
 unsigned short onze_bits(unsigned short m);
+void init_p();
+unsigned short mod_poly_simplex(unsigned short m);
+unsigned short decode_poly(unsigned short m,unsigned short mPrincipale,int count);//count  doit être = 0 pour garantir un bon resultat

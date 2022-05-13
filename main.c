@@ -73,7 +73,26 @@ printf("\nFonction 10-q10.2 / decodeV2:\n");
     print_word2(x);
     
 
+printf("\nFonction 11 -q12 / mod_poly_simplex\n");
+    x = 0b1110000000000000;
+    print_word2(x);
+    x=mod_poly_simplex(x);
+    printf("Resltat : ");
+    print_word2(x<<4);
+  
 
+
+printf("\nFonction 12 -q13 / decode_poly\n");
+    x = 0b1010111100100010;
+    
+
+    print_word2(x);
+    x=decode_poly(x,x,0);
+    printf("Resltat : ");
+    print_word2(x);
+
+
+  
 return 0;
 }
 
