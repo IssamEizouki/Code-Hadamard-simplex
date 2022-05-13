@@ -15,12 +15,12 @@ printf("\nFonction 1 / set_nth_bit\n");
 
 
 printf("\nFonction 2 / get_nth_bit\n");
-    x = 0b1101111111111110;
+    x = 0b0101111111111110;
     printf("x2= %s \n",bin(x));
     printf("return 1ier : resultat =%s\n",bin(get_nth_bit(1,x)));
     printf("return 2ieme : resultat =%s\n",bin(get_nth_bit(2,x)));
-    printf("return 1ieme : resultat =%s\n",bin(get_nth_bit(3,x)));
-    printf("return 1ieme : resultat =%s\n",bin(get_nth_bit(4,x)));
+    printf("return 3ieme : resultat =%s\n",bin(get_nth_bit(3,x)));
+    printf("return 4ieme : resultat =%s\n",bin(get_nth_bit(4,x)));
 
 
 
@@ -69,8 +69,11 @@ printf("\nFonction 10-q10.2 / decodeV2:\n");
     x = 0b0011101001001010;
     print_word2(x);
     x=decodeV2(x);
-    //x= chg_nth_bit(0,x);
+    printf("Resltat : ");
     print_word2(x);
+    
+
+
 return 0;
 }
 

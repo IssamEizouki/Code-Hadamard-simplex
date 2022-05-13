@@ -239,11 +239,12 @@ unsigned short encode_had_sys_simplexe(unsigned short m){ //A verifier
 
 
 //Question 8 : 
-unsigned short H[11];//Matrice H --> 
+unsigned short H[11];//Matrice H 
+unsigned short HT[21];//Transposee de H 
 /***
  *  Fct : Initialisation de la matrice de parieté H de G(prevu de sa colonnes nulle)
  * */
-void init_H(){
+void init_H_lignes(){
 
     H[0]=0b0011100000000000;//ligne 1
     H[1]=0b0101010000000000;//ligne 2
@@ -256,6 +257,32 @@ void init_H(){
     H[8]=0b1101000000001000;//ligne 9
     H[9]=0b1110000000000100;//ligne 10
     H[10]=0b1111000000000010;//ligne 11
+}
+
+void init_H_Cols(){
+
+    HT[0]=0b0000111111100000;//colonne 1
+    HT[1]=0b0111000111100000;//colonne 2
+    HT[2]=0b1011011001100000;//colonne 3
+    HT[3]=0b1101101010100000;//colonne 4
+    HT[4]=0b1000000000000000;//colonne 5
+    HT[5]=0b0100000000000000;//colonne 6
+    HT[6]=0b0010000000000000;//colonne 7
+    HT[7]=0b0001000000000000;//colonne 8
+    HT[8]=0b0000100000000000;//colonne 9
+    HT[9]=0b0000010000000000;//colonne 10
+    HT[10]=0b0000001000000000;//colonne 11
+    HT[11]=0b0000000100000000;//colonne 12
+    HT[12]=0b0000000010000000;//colonne 13
+    HT[13]=0b0000000001000000;//colonne 14
+    HT[14]=0b0000000000100000;//colonne 15
+    HT[15]=0b0000000000010000;//colonne 16
+    HT[16]=0b0000000000010000;//colonne 17
+    HT[17]=0b0000000000001000;//colonne 18
+    HT[18]=0b0000000000000100;//colonne 19
+    HT[19]=0b0000000000000010;//colonne 20
+    HT[20]=0b0000000000000001;//colonne 21
+
 }
 
 /**
@@ -281,6 +308,16 @@ void print_word2(const unsigned short m)
 
 
 
+/**
+ * Prends un mot encodé à 16 bits et mettre les derniers 5 bits a 0
+ * */
+unsigned short onze_bits(unsigned short m){
+unsigned mRes = m>>5;
+mRes = mRes<<5;
+return mRes;
+}
+
+
 //Question 9 : Issam 
 
 /***
@@ -292,7 +329,7 @@ void print_word2(const unsigned short m)
 unsigned short decode(unsigned short m){
 unsigned short mRes=0b0;
 //initialisation de la matrice de parité H
-init_H();
+init_H_lignes();
 //Decodage:
     unsigned short tmp1=0b0;
     unsigned short tmp2=0b0;
@@ -330,48 +367,66 @@ return mRes;
  * */
 unsigned short decodeV2(unsigned short m){
 unsigned short mRes=0b0;
+unsigned short TmpLigne1=0b0;
+unsigned short TmpLigne2=0b0;
+unsigned short TmpLigne3=0b0;
+unsigned short TmpCorrec=0b0;
 //initialisation de la matrice de parité H
-init_H();
 //Decodage:
-    unsigned short tmp1=0b0;
-    unsigned short tmp2=0b0;
-    short test=0b0;
-    unsigned short controleB=0b0;
-    int i=0,j = 0;
-    for(i=0;i<11;i++){
-        
-        controleB=0b0;
-        tmp1=0b0;
-        tmp2=0b0;
-        for (j=1;j<16;j++){
-            tmp1=get_nth_bit(j,H[i]);
-            tmp2=get_nth_bit(j,m);
-            controleB^=(tmp1&tmp2);
-        }
-        if(controleB){
-            mRes=set_nth_bit(i,mRes);
-        }
-    }
+mRes=decode(m);//syndrome
+init_H_Cols();
+    print_word2(mRes);
     if(mRes!=0){
-        for (i=0;i<3;i++)//Capacité de corriger 3 erreurs
-            m=chg_nth_bit(i,m);
+        
+        for ( int i =0 ; i<11;i++){
+            TmpLigne1 = onze_bits(HT[i]);
+
+            if(deux_mots_egaux (mRes,TmpLigne1)){
+                m=chg_nth_bit(i,m);
+                printf("Ce mot contenait une erreur au %dieme bit et ca ete corrigé\n ",i+1);
+                return m;
+            }
+            for (int j = i+1 ; j<11;j++){
+                if(mRes == (HT[j] ^ HT[i])){
+                m=chg_nth_bit(i,m);
+                m=chg_nth_bit(j,m);
+                printf("Ce mot contenait 2 erreurs au %dieme bit et au %dieme bit ca ete corrigé\n ",i+1,j+1);
+                return m;  
+                }
+                for ( int k= j+1;k<11;k++){
+                    if(mRes == (HT[i]^HT[j]^HT[k])){
+                    m=chg_nth_bit(i,m);
+                    m=chg_nth_bit(j,m);
+                    m=chg_nth_bit(k,m);
+                    printf("Ce mot contenait 3 erreurs au %dieme, %dieme et %dieme bit ca ete corrigé\n ",i+1,j+1,k+1);
+                    return m;  
+                    }
+                    else {
+                        printf(" Ce mot contient plus que 3 erreurs, ce qui dépasse la capacité du code de la correction d'erreurs\n");
+                    }
+                }
+            }
+        }
     }
-return m;
+    return m;
 }
 
-//Question 10.3 : Issam || Dima
+
+    //Question 10.3 : Issam || Dima
 
 
-//Question 11 : Issam 
-
-//Question 12 : Issam
-unsigned short mod_poly_simplex(unsigned short m)
-{
-unsigned short mRes=0b0000000000000000;
+    //Question 11 : Simplexe polynomial : 
+    //Registre de décalage à dessiner :
 
 
+    //Question 12 : Issam
+    unsigned short mod_poly_simplex(unsigned short m)
+    {
+    unsigned short mRes=0b0000000000000000;
 
-return mRes;
+
+
+    return mRes;
 }
 
 //Question 13 : Issam 

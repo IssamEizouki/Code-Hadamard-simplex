@@ -33,3 +33,5 @@ unsigned short encode_had_sys_simplexe(unsigned short m);
 unsigned short decode(unsigned short m);
 void print_word2(const unsigned short m );
 unsigned short decodeV2(unsigned short m);
+void init_H_lignes();
+unsigned short onze_bits(unsigned short m);
